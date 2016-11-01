@@ -3,7 +3,7 @@
 ### Structure ###
 
 The data may be downloaded from: https://grand-challenge.org/site/vessel12/
-and should be stored in the Data folder. Should look like this:
+and should be stored in the Data folder.
  <br />
 └─ Data <br />
    ├── Serialized <br />
