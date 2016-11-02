@@ -1,30 +1,15 @@
-## Automated Multiscale 3D Feature Learning for Vessels Segmentation in Thorax CT Images ##
+# Vessel3DDL
 
-### Structure ###
+Automated Multiscale 3D Feature Learning for Vessels Segmentation in Thorax CT Images
 
-The data may be downloaded from: https://grand-challenge.org/site/vessel12/
-and should be stored in the Data folder.
- <br />
-└─ Data <br />
-   ├── Serialized <br />
-   │   ├── Output <br />
-   │   ├── saved_classifiers <br />
-   │   ├── saved_dict <br />
-   │   ├── saved_measures <br />
-   │   ├── saved_patches <br />
-   │   └── saved_xy <br />
-   │       └── Parallel <br />
-   ├── VESSEL12_01-05 <br />
-   ├── VESSEL12_01-20_Lungmasks <br />
-   ├── VESSEL12_06-10 <br />
-   ├── VESSEL12_11-15 <br />
-   ├── VESSEL12_16-20 <br />
-   └── VESSEL12_ExampleScans <br />
-       ├── Annotations <br />
-       ├── Lungmasks <br />
-       └── Scans <br />
+## Instalation 
 
-### Structure ###
+The VESSEL 12 data may be downloaded from: https://grand-challenge.org/site/vessel12/
+and should be stored at ./Data/VESSEL12/
+
+TBD
+
+## Structure
 
 * Dictionary learning (Unsupervised step). First the dictionary has to be learned on a number of given volumes. The volumes don't have to be annotated. 
 * Classifier learning (Supervised step). Based on the learned features, train the classifier of choice.
@@ -48,5 +33,24 @@ and should be stored in the Data folder.
     └── UseClassifier <br />
         ├── UseClassifier.py <br />
         └── ViewResults.py <br />
-
 The dictionaries and classifier weights are serialized.
+
+### LearnDictionary
+Execute the scripts in following order:
+1. ExtractPatches.py
+2. LearnDictionary.py
+### LearnClassifier
+Execute the scripts in following order:
+1. ExtractXy_multithread.py
+2. ConcatenateXy.py
+3. TrainClassifier.py or MakeMeasurments.py
+### Usage
+Once the dictionary and classifier are learned,
+one can use them on a given volume.
+Execute the scripts in following order:
+1. UseClassifier.py
+2. ViewResults.py
+
+## Reference
+TODO
+
