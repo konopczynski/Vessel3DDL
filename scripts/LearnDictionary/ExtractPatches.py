@@ -30,9 +30,9 @@ def ExtractPatches(Param,numOfPatches=100000):
         # prepare volume: apply mask and rescale
         if   Param.patchVpaths[v_indx][-3:] == 'raw':
             print('raw')
-            mask = np.empty((Param.patchSliceNum[v_indx],Param.SliceDim[0],Param.SliceDim[1]), np.bool_)
+            mask = np.empty((Param.patchSliceNum[v_indx],Param.sliceDim[0],Param.sliceDim[1]), np.bool_)
             mask.data[:] = open(Param.patchMpaths[v_indx]).read()
-            rV = HLP.ReadVolume(Param.SliceDim,Param.patchSliceNum[v_indx], Param.patchVpaths[v_indx])
+            rV = HLP.ReadVolume(Param.sliceDim,Param.patchSliceNum[v_indx], Param.patchVpaths[v_indx])
         elif Param.patchVpaths[v_indx][-3:] == 'pkl':
             print('pkl')
             inputFile_V = open(Param.patchVpaths[v_indx], 'rb')
