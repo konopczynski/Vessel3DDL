@@ -1,1 +1,4 @@
 *.pyc
+*.iws
+**/.idea/workspace.xml
+**/.idea/tasks.xml
