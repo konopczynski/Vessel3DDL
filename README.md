@@ -18,20 +18,19 @@ TBD
 The dictionaries and classifier weights are serialized in the ./Data/Serialized directory.
 
 ### LearnDictionary
-Execute the scripts in following order:
-1. ExtractPatches.py
-2. LearnDictionary.py
+Execute the scripts in following order: <br />
+1. ExtractPatches.py <br />
+2. LearnDictionary.py <br />
 ### LearnClassifier
-Execute the scripts in following order:
-1. ExtractXy_multithread.py
-2. ConcatenateXy.py
-3. TrainClassifier.py or MakeMeasurments.py
+Execute the scripts in following order: <br />
+1. ExtractXy_multithread.py <br />
+2. ConcatenateXy.py <br />
+3. TrainClassifier.py or MakeMeasurments.py <br />
 ### Usage
-Once the dictionary and classifier are learned,
-one can use them on a given volume.
-Execute the scripts in following order:
-1. UseClassifier.py
-2. ViewResults.py
+Once the dictionary and classifier are learned, they can by uses on a given volume. <br />
+Execute the scripts in following order: <br />
+1. UseClassifier.py <br />
+2. ViewResults.py <br />
 
 ## Reference
 TODO
