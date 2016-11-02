@@ -83,8 +83,8 @@ if __name__ == '__main__':
         for numberOfScales in scales:
             print "numberOfScales: "+str(numberOfScales) + " ratio: "+str(ratio) + \
                   " number of eval: "+str(number_of_evaluations) + " numberOfAtoms: " + str(Param.numOfAtoms)
-            print("Avg lbfgs L2:     "+str(np.mean(measure[str(numberOfScales)][str(ratio)]['CV Logit lbfgs L2'])))
-            print("std lbfgs L2:     "+str(np.std(measure[str(numberOfScales)][str(ratio)]['CV Logit lbfgs L2'])))
-            print("Avg newton L2:    "+str(np.mean(measure[str(numberOfScales)][str(ratio)]['CV Logit newton L2'])))
-            print("std newton L2:    "+str(np.std(measure[str(numberOfScales)][str(ratio)]['CV Logit newton L2'])))
+            print("Avg lbfgs L2:     "+str(np.mean(measure[str(numberOfScales)][str(ratio)]['CV_Logit_lbfgs_L2'])))
+            print("std lbfgs L2:     "+str(np.std(measure[str(numberOfScales)][str(ratio)]['CV_Logit_lbfgs_L2'])))
+            print("Avg newton L2:    "+str(np.mean(measure[str(numberOfScales)][str(ratio)]['CV_Logit_newton_L2'])))
+            print("std newton L2:    "+str(np.std(measure[str(numberOfScales)][str(ratio)]['CV_Logit_newton_L2'])))
     SerializeMeasure(Param.path2Measures,Param.dicoName,measure)
