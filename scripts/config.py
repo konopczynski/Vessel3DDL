@@ -28,7 +28,8 @@ def ReadParameters():
     Param.path2Clfs     = '../../Data/Serialized/saved_classifiers/'
     Param.path2Measures = '../../Data/Serialized/saved_measures/'
     Param.path2Output   = '../../Data/Serialized/Output/'
-
+    # create the paths if they dont exist
+    CreatePaths([Param.path2patches,Param.path2dicts,Param.path2Xy_temp,Param.path2Xy,Param.path2Clfs,Param.path2Measures,Param.path2Output])
     # 1. Extraction of patches
     Param.nP = 1000
     Param.patchVpaths, Param.patchMpaths=getVandMpaths(Param.path)
@@ -161,3 +162,9 @@ def LoadAnnotations(path,Apaths):
             A = np.load(inputFile_A)
             LoadedAdnotation.append(A)
     return LoadedAdnotation
+
+def CreatePaths(directories):
+    for d in directories:
+        if not os.path.exists(d):
+            os.makedirs(d)
+    return None
