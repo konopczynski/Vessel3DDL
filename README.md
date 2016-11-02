@@ -15,25 +15,7 @@ TBD
 * Classifier learning (Supervised step). Based on the learned features, train the classifier of choice.
 * Testing module. Apply filters from the dictionary and use a classifier.
 * Some additional functionality: 3d patch extraction, 3d Gaussian pyramids, loading/saving data.
- <br />
-└── scripts <br />
-    ├── config.py <br />
-    ├── HelpFunctions.py <br />
-    ├── LearnClassifier <br />
-    │   ├── ConcatenateXy.py <br />
-    │   ├── ExtractXy_multithread.py <br />
-    │   ├── MakeMeasurments.py <br />
-    │   ├── TrainClassifier.py <br />
-    │   └── VolumesToXy.py <br />
-    ├── LearnDictionary <br />
-    │   ├── ExtractPatches.py <br />
-    │   └── LearnDictionary.py <br />
-    ├── patches_3d.py <br />
-    ├── pyramids_3d.py <br />
-    └── UseClassifier <br />
-        ├── UseClassifier.py <br />
-        └── ViewResults.py <br />
-The dictionaries and classifier weights are serialized.
+The dictionaries and classifier weights are serialized in the ./Data/Serialized directory.
 
 ### LearnDictionary
 Execute the scripts in following order:
