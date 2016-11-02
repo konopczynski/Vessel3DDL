@@ -10,7 +10,7 @@ and should be stored at ./Data/VESSEL12/
 TBD
 
 ## Structure
-
+The entire processing pipeline for the VESSEL12 data is set up in the config.py file.
 * Dictionary learning (Unsupervised step). First the dictionary has to be learned on a number of given volumes. The volumes don't have to be annotated. 
 * Classifier learning (Supervised step). Based on the learned features, train the classifier of choice.
 * Testing module. Apply filters from the dictionary and use a classifier.
