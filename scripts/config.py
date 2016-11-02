@@ -46,7 +46,7 @@ def ReadParameters():
     Param.numOfAtoms = 24 # numOfAtoms e.g. 512
     Param.eS = 5 # elementSize e.g. 5x5x5
     Param.bS = 5 # batch size
-    Param.nI = 200 # number of iterations
+    Param.nI = 300 # number of iterations
     Param.aC = 1 # alpha constant
 
     Param.Fpatches = str(Param.nP)+'patches_'+str(Param.patch_size[0])+'ps_'+str(len(Param.patchVpaths))+'stacks'
@@ -54,14 +54,13 @@ def ReadParameters():
     # 3. Feature map extraction #########################################
 
     Param.AVpaths,Param.AMpaths,Param.Apaths = getA_VandMpaths(Param.path2examples)
-
     Param.numOfVolumes = 3
     Param.sliceNum=(459,448,418)
     Param.dim = ((459,512,512),(448,512,512),(418,512,512))
     Param.anno = LoadAnnotations(Param.path2examples,Param.Apaths) # Read the annotations in the csv format
     Param.clfS    = 2 # Scales to use for the classifier
     Param.fMapS   = 2 # num of scales used to create the feature maps
-    Param.threads = 1 # the more memory you have the higher it can be
+    Param.threads = 4 # the more memory you have the higher it can be
     # 4. Training the classifier
     Param.classifiers ={ # C=1
         'CV_Logit_newton_L2': LogisticRegressionCV(penalty='l2',solver='newton-cg', n_jobs=1,max_iter=300),
