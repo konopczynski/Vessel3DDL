@@ -20,9 +20,9 @@ def ReadParameters():
     Param=R_params()
     # 0. Paths to data and serialiation
     Param.path          = '../../Data/'
-    Param.path2examples = '../../Data/VESSEL12_ExampleScans/'
+    Param.path2examples = '../../Data/VESSEL12/VESSEL12_ExampleScans/'
     Param.path2patches  = '../../Data/Serialized/saved_patches/'
-    Param.path2dicts    = '../../Data/Serialized/saved_dict/'
+    Param.path2dicts    = '../../Data/Serialized/saved_dicts/'
     Param.path2Xy_temp  = '../../Data/Serialized/saved_xy/Parallel/'
     Param.path2Xy       = '../../Data/Serialized/saved_xy/'
     Param.path2Clfs     = '../../Data/Serialized/saved_classifiers/'
@@ -42,7 +42,7 @@ def ReadParameters():
     Param.patchScale = 5 # number of scales from which patches are extracted
 
     # 2. Dicionary learning 
-    Param.numOfAtoms = 8 # numOfAtoms e.g. 512
+    Param.numOfAtoms = 24 # numOfAtoms e.g. 512
     Param.eS = 5 # elementSize e.g. 5x5x5
     Param.bS = 5 # batch size
     Param.nI = 200 # number of iterations
@@ -80,57 +80,57 @@ def getVandMpaths(path):
     Vpath=[]
     Mpath=[]
     # Scans: VESSEL12_01-05
-    Vpath.append(path+'VESSEL12_01-05/VESSEL12_01.raw')
-    Vpath.append(path+'VESSEL12_01-05/VESSEL12_02.raw')
-    Vpath.append(path+'VESSEL12_01-05/VESSEL12_03.raw')
-    Vpath.append(path+'VESSEL12_01-05/VESSEL12_04.raw')
-    Vpath.append(path+'VESSEL12_01-05/VESSEL12_05.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_01-05/VESSEL12_01.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_01-05/VESSEL12_02.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_01-05/VESSEL12_03.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_01-05/VESSEL12_04.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_01-05/VESSEL12_05.raw')
     
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_01.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_02.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_03.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_04.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_05.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_01.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_02.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_03.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_04.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_05.raw')
     
     # Scans: VESSEL12_06-10
-    Vpath.append(path+'VESSEL12_06-10/VESSEL12_06.raw')
-    Vpath.append(path+'VESSEL12_06-10/VESSEL12_07.raw')
-    Vpath.append(path+'VESSEL12_06-10/VESSEL12_08.raw')
-    Vpath.append(path+'VESSEL12_06-10/VESSEL12_09.raw')
-    Vpath.append(path+'VESSEL12_06-10/VESSEL12_10.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_06-10/VESSEL12_06.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_06-10/VESSEL12_07.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_06-10/VESSEL12_08.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_06-10/VESSEL12_09.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_06-10/VESSEL12_10.raw')
     
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_06.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_07.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_08.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_09.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_10.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_06.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_07.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_08.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_09.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_10.raw')
     
     # Scans: VESSEL12_11-15
-    Vpath.append(path+'VESSEL12_11-15/VESSEL12_11.raw')
-    Vpath.append(path+'VESSEL12_11-15/VESSEL12_12.raw')
-    Vpath.append(path+'VESSEL12_11-15/VESSEL12_13.raw')
-    Vpath.append(path+'VESSEL12_11-15/VESSEL12_14.raw')
-    Vpath.append(path+'VESSEL12_11-15/VESSEL12_15.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_11-15/VESSEL12_11.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_11-15/VESSEL12_12.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_11-15/VESSEL12_13.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_11-15/VESSEL12_14.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_11-15/VESSEL12_15.raw')
     
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_11.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_12.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_13.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_14.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_15.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_11.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_12.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_13.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_14.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_15.raw')
     
     
     # Scans: VESSEL12_16-20
-    Vpath.append(path+'VESSEL12_16-20/VESSEL12_16.raw')
-    Vpath.append(path+'VESSEL12_16-20/VESSEL12_17.raw')
-    Vpath.append(path+'VESSEL12_16-20/VESSEL12_18.raw')
-    Vpath.append(path+'VESSEL12_16-20/VESSEL12_19.raw')
-    Vpath.append(path+'VESSEL12_16-20/VESSEL12_20.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_16-20/VESSEL12_16.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_16-20/VESSEL12_17.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_16-20/VESSEL12_18.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_16-20/VESSEL12_19.raw')
+    Vpath.append(path+'VESSEL12/VESSEL12_16-20/VESSEL12_20.raw')
     
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_16.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_17.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_18.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_19.raw')
-    Mpath.append(path+'VESSEL12_01-20_Lungmasks/VESSEL12_20.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_16.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_17.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_18.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_19.raw')
+    Mpath.append(path+'VESSEL12/VESSEL12_01-20_Lungmasks/VESSEL12_20.raw')
     return Vpath,Mpath
 
 def getA_VandMpaths(path):
