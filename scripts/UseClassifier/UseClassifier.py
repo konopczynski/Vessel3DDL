@@ -4,22 +4,22 @@ Created on Tue Jul 12 08:30:17 2016
 
 @author: konopczynski
 
-This script is using prelearned dictionary and clasifier.
+This script is using prelearned dictionary and classifier.
 It is hardcoded for VESSEL12 data.
 """
 
 import pickle
 import sys
-import os
 from sklearn.externals import joblib
 import numpy as np
 from scipy import ndimage as nd
 import scipy
 import time
 sys.path.append('../')
+import config
+sys.path.append('../utils')
 import HelpFunctions as HLP
 import pyramids_3d as pyr
-import config as C
 
 def PreprocessVolume():
     #empty, no preprocessing has been applied so far
@@ -35,7 +35,7 @@ def LoadVolume(sliceDim,sliceNum,Vpath):
     return V
 
 def LoadDictionary(Dpath,Dname):
-    inputFile = open(Dpath+inDict,'rb')
+    inputFile = open(Dpath+Dname,'rb')
     D = pickle.load(inputFile) # load the dictionary
     inputFile.close()
     return D
@@ -152,25 +152,24 @@ def Padd(V):
     return PaddedVolume
 
 def SerializeOutput(Output,path2save,file_name):
-	outputFile = open(path2save+file_name+".npy", 'wb')
-	np.save(outputFile, Output,allow_pickle=True, fix_imports=True)
-	outputFile.close()
-	return None
+    outputFile = open(path2save+file_name+".npy", 'wb')
+    np.save(outputFile, Output,allow_pickle=True, fix_imports=True)
+    outputFile.close()
+    return None
 
+def main():
+    param = config.read_parameters()
+    sliceNum = param.sliceNum[0]
+    path2volume = param.path2examples+param.volumeToProcess
+    scale = param.clfS
 
-if __name__ == '__main__':
-    Param = C.ReadParameters()
-    sliceNum = Param.sliceNum[0]
-    path2volume = Param.path2examples+Param.volumeToProcess
-    scale = Param.clfS
+    inDict = param.dictionaryName+'.pkl'
+    inClass= param.clf2use+'_'+param.dictionaryName
 
-    inDict = Param.dicoName+'.pkl'
-    inClass= Param.dicoName
-
-    C = LoadClassifier(Param.path2Clfs,inClass)
-    V = LoadVolume(Param.sliceDim,sliceNum,path2volume)
+    C = LoadClassifier(param.path2classifier,inClass)
+    V = LoadVolume(param.sliceDim,sliceNum,path2volume)
     V = Padd(V)
-    D = LoadDictionary(Param.path2dicts,inDict)
+    D = LoadDictionary(param.path2dicts,inDict)
 
     print ('start')
     t0=time.time()
@@ -188,12 +187,15 @@ if __name__ == '__main__':
         P=P.astype('float32')
         O=ApplyAtoms(P,D,scale)
         shp = np.shape(P)
-        O = O.reshape(scale*Param.numOfAtoms,shp[0]*shp[1]*shp[2])
+        O = O.reshape(scale*param.numOfAtoms,shp[0]*shp[1]*shp[2])
         O = O.T
         y_pred = C.predict(O)
         Out.append(y_pred.reshape(shp[0],shp[1],shp[2]))
     ####
     O=connectAllBlocks(Out,(512,512,512),window)
-    SerializeOutput(O,Param.path2Output,'OutputVolume')
+    SerializeOutput(O,param.path2Output,param.dictionaryName+'_OutputVolume')
     print(time.time()-t0)
     print("Done")
+
+if __name__ == '__main__':
+    main()

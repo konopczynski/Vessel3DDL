@@ -1,23 +1,8 @@
 import numpy as np
-import pickle
-import pandas as pd
-from sklearn.feature_extraction import image
-from sklearn.decomposition import MiniBatchDictionaryLearning
-from scipy import ndimage
 import pyqtgraph as pg
-from sklearn.linear_model import LogisticRegressionCV
-from sklearn.linear_model import LogisticRegression
-from skimage.transform import pyramid_gaussian
-from skimage.transform import pyramid_expand
-from sklearn.decomposition import MiniBatchDictionaryLearning
 import sys
 sys.path.append('./')
-import patches_3d  as p
-import pyramids_3d as pyr
-import os
 import time
-
-# TBD: Most of those imports are unncessary
 
 # some help functions
 def ReadVolumes(SliceDim,SliceNum, paths):

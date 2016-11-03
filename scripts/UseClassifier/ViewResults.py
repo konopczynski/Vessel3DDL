@@ -6,16 +6,21 @@ Created on Tue Jul 12 08:30:17 2016
 Visualize the output volume
 """
 
-import sys
-import os
 import numpy as np
 import pyqtgraph as pg
-import config as C
+import sys
+sys.path.append('../')
+import config
 
-if __name__ == '__main__':
-    Param = C.ReadParameters()
-    Path2Save =  Param.path2Output
-    fn = Param.outputFn 
-    z = np.load(Path2Save+fn)
+
+def main():
+    param = config.read_parameters()
+    path2save = param.path2Output
+    fn = param.dictionaryName+'_'+param.outputFn
+    z = np.load(path2save+fn)
     pg.image(z)
     raw_input('click to end')
+    return None
+
+if __name__ == '__main__':
+    main()

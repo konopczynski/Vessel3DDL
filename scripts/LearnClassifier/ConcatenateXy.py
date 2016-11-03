@@ -2,18 +2,19 @@
 """
 Created on Wed Mar 23 13:15:02 2016
 
-@author: konop
+@author: konopczynski
 """
 
 import numpy as np
 import pickle
 import sys
-import os
-from VolumesToXy import Serialize_Xy
 sys.path.append('../')
 import config as C
+sys.path.append('../utils')
+from VolumesToXy import serialize_xy
 
-def ReadTemp_xy(path2xy, nmbrOfThreads, preffix):
+
+def read_temp_xy(path2xy, nmbrOfThreads, preffix):
     ArrayOf_Xtemp=[]
     ArrayOf_ytemp=[]
     for i in xrange(nmbrOfThreads):
@@ -29,7 +30,8 @@ def ReadTemp_xy(path2xy, nmbrOfThreads, preffix):
         inputFile.close()
     return ArrayOf_Xtemp, ArrayOf_ytemp
 
-def Get_y(ytemp,nmbrOfScalesApplied,nmbrOfVolumes):
+
+def get_y(ytemp,nmbrOfScalesApplied,nmbrOfVolumes):
     """
     insert the yArray and extract the y labels
     Example:
@@ -45,12 +47,13 @@ def Get_y(ytemp,nmbrOfScalesApplied,nmbrOfVolumes):
     ytempArray=[] 
     for i in xrange(nmbrOfVolumes):
         ytempArray.append(ytemp[0][i*nmbrOfScalesApplied])
-    y=ytempArray[0] # initialize y with 0
+    y = ytempArray[0]  # initialize y with 0
     for i in xrange(len(ytempArray)-1):
-        y=np.concatenate((y,ytempArray[i+1]),axis=0)
+        y = np.concatenate((y,ytempArray[i+1]),axis=0)
     return y
 
-def Get_X(Xtemp,nmbrOfScalesApplied,nmbrOfVolumes,nmbrOfScales4Classifier, nmbrOfThreads):
+
+def get_X(Xtemp,nmbrOfScalesApplied,nmbrOfVolumes,nmbrOfScales4Classifier, nmbrOfThreads):
     """
     Example:
     for nmbrOfScalesApplied = 5, nmbrOfVolumes = 3, 
@@ -102,15 +105,20 @@ def Get_X(Xtemp,nmbrOfScalesApplied,nmbrOfVolumes,nmbrOfScales4Classifier, nmbrO
         X = np.concatenate((X,XtempArray_volume[i+1]),axis=0)
     return X
 
-if __name__ == '__main__':
+
+def main():
     # Set the parameters:
-    Param = C.ReadParameters()
+    Param = C.read_parameters()
     number_of_volumes = Param.numOfVolumes
     number_of_parallel_threads  = Param.threads   
     number_of_scales_fmaps = Param.fMapS   
     number_of_scales_classifier = Param.clfS
     
-    Xtemp, ytemp = ReadTemp_xy(Param.path2Xy_temp,number_of_parallel_threads,Param.dicoName)
-    y = Get_y(ytemp,number_of_scales_fmaps,number_of_volumes ) # i.e. y=np.concatenate((y_21,y_22,y_23),axis=0)
-    X = Get_X(Xtemp,number_of_scales_fmaps,number_of_volumes,number_of_scales_classifier,number_of_parallel_threads)
-    Serialize_Xy(Param.path2Xy,X,y,Param.dicoName,"")
+    Xtemp, ytemp = read_temp_xy(Param.path2Xy_temp,number_of_parallel_threads,Param.dictionaryName)
+    y = get_y(ytemp,number_of_scales_fmaps,number_of_volumes ) # i.e. y=np.concatenate((y_21,y_22,y_23),axis=0)
+    X = get_X(Xtemp,number_of_scales_fmaps,number_of_volumes,number_of_scales_classifier,number_of_parallel_threads)
+    serialize_xy(Param.path2Xy,X,y,Param.dictionaryName,"")
+    return None
+
+if __name__ == '__main__':
+    main()

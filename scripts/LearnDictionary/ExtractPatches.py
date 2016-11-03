@@ -2,7 +2,7 @@
 """
 Created on Fri Jan 29 16:56:11 2016
 
-@author: konop
+@author: konopczynski
 
 This script extracts random patches at many scales from provided data.
 At scale 0 it extracts only the patches from the masked region.
@@ -12,70 +12,75 @@ At higher scales the extracted number of patches is lower.
 import numpy as np
 import pickle
 import sys
-import os
-
 sys.path.append('../')
-
-import patches_3d  as p
+import config
+sys.path.append('../utils')
+import patches_3d as p
 import pyramids_3d as pyr
 import HelpFunctions as HLP
-import config as C
 
 
-def ExtractPatches(Param,numOfPatches=100000):
+def extract_patches(param, numofpatches=100000):
     # Extract patches from each volume and scale
-    patches=[]
-    for v_indx in range(len(Param.patchVpaths)):
-        print('volume: ' + str(v_indx))
+    patches = []
+    raw_volume, normalized_patches, mask = 0, 0, 0  # init
+
+    for v_index in range(len(param.paths2volumes_unannotated)):
+        print('volume: ' + str(v_index))
         # prepare volume: apply mask and rescale
-        if   Param.patchVpaths[v_indx][-3:] == 'raw':
+        if param.paths2volumes_unannotated[v_index][-3:] == 'raw':
             print('raw')
-            mask = np.empty((Param.patchSliceNum[v_indx],Param.sliceDim[0],Param.sliceDim[1]), np.bool_)
-            mask.data[:] = open(Param.patchMpaths[v_indx]).read()
-            rV = HLP.ReadVolume(Param.sliceDim,Param.patchSliceNum[v_indx], Param.patchVpaths[v_indx])
-        elif Param.patchVpaths[v_indx][-3:] == 'pkl':
+            mask = np.empty((param.patchSliceNum[v_index], param.sliceDim[0], param.sliceDim[1]), np.bool_)
+            mask.data[:] = open(param.paths2masks_unannotated[v_index]).read()
+            raw_volume = HLP.ReadVolume(param.sliceDim, param.patchSliceNum[v_index],
+                                        param.paths2volumes_unannotated[v_index])
+        elif param.paths2volumes_unannotated[v_index][-3:] == 'pkl':
             print('pkl')
-            inputFile_V = open(Param.patchVpaths[v_indx], 'rb')
-            inputFile_M = open(Param.patchMpaths[v_indx], 'rb')
-            rV = pickle.load(inputFile_V)
-            mask = pickle.load(inputFile_M)
-            inputFile_V.close()
-            inputFile_M.close()
-            mask=mask.astype(bool) # we will use this mask to sample from the masked regions at scale 0
-        # DONT MAP TO 255 - JUST MAKE IT FLOAT32 #
-        volume = rV.astype('float32') #HLP.MAP_TO_255_float_32(rV)
+            path2input_volume = open(param.paths2volumes_unannotated[v_index], 'rb')
+            path2input_mask   = open(param.paths2masks_unannotated[v_index], 'rb')
+            raw_volume = pickle.load(path2input_volume)
+            mask = pickle.load(path2input_mask)
+            path2input_volume.close()
+            path2input_mask.close()
+            mask = mask.astype(bool)  # use this mask to sample from the masked regions at scale 0
+        # DON'T MAP TO 255 - JUST MAKE IT FLOAT32 #
+        volume = raw_volume.astype('float32')  # HLP.MAP_TO_255_float_32(raw_volume)
         # APPLY SCALES
-        volume = tuple(pyr.pyramid_gaussian_3d((volume), downscale=2, max_layer=Param.patchScale))
-        for s_indx in range(Param.patchScale):
-            x, y, z= np.shape(volume[s_indx])
-            patch_size = Param.patch_size
-            print("     scale:"+str(s_indx))
-            if s_indx==0:
-                data = p.extract_patches_3d_fromMask(volume[s_indx], mask, patch_size, max_patches=numOfPatches,random_state=2)
+        volume = tuple(pyr.pyramid_gaussian_3d(volume, downscale=2, max_layer=param.patchScale))
+        for s_index in range(param.patchScale):
+            patch_size = param.patch_size
+            print("     scale:"+str(s_index))
+            if s_index == 0:
+                data = p.extract_patches_3d_fromMask(volume[s_index], mask, patch_size,
+                                                     max_patches=numofpatches, random_state=2)
             else:
-                data = p.extract_patches_3d(volume[s_indx], patch_size, max_patches=numOfPatches/(8*s_indx),random_state=2)        
-            data = data.reshape(data.shape[0], -1)  
-            normalizedPatches = HLP.MeanSubtraction(data)
-            patches.append(normalizedPatches)
+                data = p.extract_patches_3d(volume[s_index], patch_size,
+                                            max_patches=numofpatches/(8*s_index), random_state=2)
+            data = data.reshape(data.shape[0], -1)
+            normalized_patches = HLP.MeanSubtraction(data)
+            patches.append(normalized_patches)
 
     # concatenate patches together
     for i in range(len(patches)-1):
-        normalizedPatches = np.concatenate((normalizedPatches,patches[i]),axis=0).copy()
-    print ("Number of patches: "+str(len(normalizedPatches)))
-    return normalizedPatches
+        normalized_patches = np.concatenate((normalized_patches, patches[i]), axis=0).copy()
+    print ("Number of patches: "+str(len(normalized_patches)))
+    return normalized_patches
 
-def SerializePatches(patches,file_name,path2save):
-    path2save = "../../Data/Serialized/saved_patches/"
+
+def serialize_patches(patches, file_name, path2save):
     f2save = path2save+file_name+".npy"
     output = open(f2save, 'wb')
-    np.save(output, patches,allow_pickle=True, fix_imports=True)
+    np.save(output, patches, allow_pickle=True, fix_imports=True)
     output.close()
     print "saved to: "+f2save
     return None
 
 
-if __name__ == '__main__':
-    P = C.ReadParameters()
-    normalizedPatches = ExtractPatches(P,P.nP) # 100000
-    SerializePatches(normalizedPatches,P.Fpatches,P.path2patches)
+def main():
+    param = config.read_parameters()
+    normalized_patches = extract_patches(param, param.number_of_patches)  # 100000
+    serialize_patches(normalized_patches, param.fileWithPatches, param.path2patches)
     print('done')
+
+if __name__ == '__main__':
+    main()

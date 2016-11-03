@@ -2,7 +2,7 @@
 """
 Created on Fri Jan 29 16:56:11 2016
 
-@author: konop
+@author: konopczynski
 Computes the Feature Maps and extract feature vectors
 for the annotated voxels.
 The number of threads is hardcoded
@@ -10,38 +10,39 @@ The number of threads is hardcoded
 
 import pickle
 import sys
-import os
 sys.path.append('../')
-import config as C
-from VolumesToXy import ApplyFilters, Serialize_Xy
+sys.path.append('../utils')
+import config
+from VolumesToXy import apply_filters, serialize_xy
 from multiprocessing.dummy import Pool as ThreadPool
 from functools import partial
 
-def applyF(Param,p):
+
+def apply_feature_maps(param, p):
     # d is a number of threads
-    d=Param.threads
-    Dictpath = Param.path2dicts
-    path2saveXandY_temp = Param.path2Xy_temp
+    d = param.threads
     # Read dictionary
-    dicoName = Param.dicoName
-    inDict = dicoName+'.pkl'
-    preffix= dicoName
-    inputFile = open(Dictpath+inDict,'rb')
-    D = pickle.load(inputFile) # load the dictionary
-    l = len(D)/d   
-    D = D[(p)*l:(p+1)*l] # consider only the d-th number of atoms
-    inputFile.close()
+    input_file = open(param.path2dicts+param.dictionaryName+'.pkl', 'rb')
+    dictionary = pickle.load(input_file)  # load the dictionary
+    l = len(dictionary)/d
+    dictionary = dictionary[p*l:(p+1)*l]  # consider only the d-th number of atoms
+    input_file.close()
     # Apply filters
-    XX,yy=ApplyFilters(Param,D)
+    XX, yy = apply_filters(param, dictionary)
     # Serialize
-    Serialize_Xy(path2saveXandY_temp,XX=XX,yy=yy,preffix=preffix,suffix='_'+str(p))
+    serialize_xy(param.path2Xy_temp, XX=XX, yy=yy, preffix=param.dictionaryName, suffix='_'+str(p))
+    return None
+
+
+def main():
+    param = config.read_parameters()
+    parts = range(0, param.threads, 1)
+    partial_apply_feature_maps = partial(apply_feature_maps, param)
+    pool = ThreadPool(param.threads)
+    pool.map(partial_apply_feature_maps, parts)
+    pool.close()
+    pool.join()
     return None
 
 if __name__ == '__main__':
-    Param = C.ReadParameters()
-    parts = range(0,Param.threads,1)
-    partial_applyF = partial(applyF,Param)
-    pool = ThreadPool(Param.threads)
-    pool.map(partial_applyF, parts)
-    pool.close()
-    pool.join()
+    main()
