@@ -2,12 +2,10 @@
 
 Automated Multiscale 3D Feature Learning for Vessels Segmentation in Thorax CT Images
 
-## Instalation 
+## Data
 
 The VESSEL 12 data may be downloaded from: https://grand-challenge.org/site/vessel12/
 and should be stored at ./Data/VESSEL12/
-
-TBD
 
 ## Structure
 The entire processing pipeline for the VESSEL12 data is set up in the config.py file.
@@ -25,13 +23,9 @@ Execute the scripts in following order: <br />
 Execute the scripts in following order: <br />
 1. ExtractXy_multithread.py <br />
 2. ConcatenateXy.py <br />
-3. TrainClassifier.py or MakeMeasurments.py <br />
+3. TrainClassifier.py or MakeMeasurements.py <br />
 ### Usage
 Once the dictionary and classifier are learned, they can by uses on a given volume. <br />
 Execute the scripts in following order: <br />
 1. UseClassifier.py <br />
 2. ViewResults.py <br />
-
-## Reference
-TODO
-
