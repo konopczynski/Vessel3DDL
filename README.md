@@ -6,7 +6,28 @@ Automated Multiscale 3D Feature Learning for Vessels Segmentation in Thorax CT I
 
 The VESSEL 12 data may be downloaded from: https://grand-challenge.org/site/vessel12/
 and should be stored at ./Data/VESSEL12/
-
+```
+├── Data
+│    └── VESSEL12
+│        ├── VESSEL12_01-05
+│        ├── VESSEL12_01-20_Lungmasks
+│        ├── VESSEL12_06-10
+│        ├── VESSEL12_11-15
+│        ├── VESSEL12_16-20
+│        └── VESSEL12_ExampleScans
+│            ├── Annotations
+│            ├── Lungmasks
+│            └── Scans
+├── LICENSE
+├── README.md
+└── scripts
+    ├── config.py
+    ├── config.pyc
+    ├── LearnClassifier
+    ├── LearnDictionary
+    ├── UseClassifier
+    └── utils
+```
 ## Structure
 The entire processing pipeline for the VESSEL12 data is set up in the config.py file.
 * Dictionary learning (Unsupervised step). First the dictionary has to be learned on a number of given volumes. The volumes don't have to be annotated. 
