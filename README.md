@@ -50,3 +50,19 @@ Once the dictionary and classifier are learned, they can by uses on a given volu
 Execute the scripts in following order: <br />
 1. UseClassifier.py <br />
 2. ViewResults.py <br />
+
+## Citation
+Please cite these paper in your publications if it helps your research:
+
+    @inproceedings{konopczynski2019automated,
+        title={Automated multiscale 3D feature learning for vessels segmentation in Thorax CT images},
+        author={Konopczy{\'n}ski, Tomasz and Kr{\"o}ger, Thorben and Zheng, Lei and Garbe, Christoph S and Hesser, J{\"u}rgen},
+        booktitle={2016 IEEE Nuclear Science Symposium, Medical Imaging Conference and Room-Temperature Semiconductor Detector Workshop (NSS/MIC/RTSD)},
+        pages={1--3},
+        year={2019},
+        organization={IEEE}
+    }
+    
+Link to the paper:
+
+- [Automated Multiscale 3D Feature Learning for Vessels Segmentation in Thorax CT Images](https://arxiv.org/abs/1901.01562)
